@@ -1,0 +1,6 @@
+Tooltip_EN = {
+
+  Tooltip_CorpseFlesh = "Will rot quickly, can  be used to make compost. It could also be cooked..",
+  Tooltip_CookedCorpseFlesh = "It should be safe to eat now. This used to be a living human being..",
+
+}

@@ -1,0 +1,52 @@
+module ButcherCorpsesB42 {
+
+  
+  item Fleshofcorpse {
+    Type=Food,
+    FoodType=Meat,
+    Weight=1,
+    DisplayName=Corpse Flesh,
+    Icon=CorpseFlesh,
+	DangerousUncooked = TRUE,
+    HungerChange=-60,
+	Calories = 1000,
+	Carbohydrates = 0,
+	Lipids = 100,
+	Proteins = 150,
+	UnhappyChange = 100,
+	StressChange = 100,
+	IsCookable = TRUE,
+	ReplaceOnCooked = ButcherCorpsesB42.CookedCorpseFlesh,
+	MinutesToCook = 60,
+    OnEat = ButcherCorpsesB42Util.OnEat_CorpseFlesh,
+    DaysFresh=1,
+    DaysTotallyRotten=1,
+    Tooltip=Tooltip_CorpseFlesh,
+  }
+  
+  item CookedCorpseFlesh {
+    Type=Food,
+    FoodType=Meat,
+    Weight=1,
+    DisplayName=Corpse Flesh,
+    Icon=CorpseFlesh,
+	DangerousUncooked = TRUE,
+	BadCold = true,
+	GoodHot = false,
+    HungerChange=-60,
+	Calories = 1000,
+	Carbohydrates = 0,
+	Lipids = 100,
+	Proteins = 150,
+	UnhappyChange = 100,
+	StressChange = 100,
+	IsCookable = TRUE,
+	MinutesToCook = 0, 
+	MinutesToBurn = 20,
+    OnEat = ButcherCorpsesB42Util.OnEat_CookedCorpseFlesh,
+	DaysFresh=1,
+    DaysTotallyRotten=1,
+	Tooltip=Tooltip_CookedCorpseFlesh,
+  }
+
+}

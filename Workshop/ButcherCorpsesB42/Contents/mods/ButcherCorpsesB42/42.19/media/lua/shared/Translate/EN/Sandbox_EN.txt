@@ -1,0 +1,22 @@
+Sandbox_EN = {
+
+	Sandbox_ButcherCorpsesB42 = "Butcher Corpses",
+
+	Sandbox_ButcherCorpsesB42EffectOnEat = "Effect on eating raw Corpse Flesh",
+	Sandbox_ButcherCorpsesB42EffectOnEat_tooltip = "Effect on the player after eating raw flesh from butchered corpses. This does not change unhappiness and stress gain."
+	Sandbox_ButcherCorpsesB42EffectOnEat_option1 = "No effect"
+	Sandbox_ButcherCorpsesB42EffectOnEat_option2 = "Food Sickness"
+	Sandbox_ButcherCorpsesB42EffectOnEat_option3 = "Zombie Infection"
+	Sandbox_ButcherCorpsesB42EffectOnEat_option4 = "Zombie Infection + Food Sickness"
+	
+	Sandbox_ButcherCorpsesB42EffectOnEatCooked = "Effect on eating cooked Corpse Flesh",
+	Sandbox_ButcherCorpsesB42EffectOnEatCooked_tooltip = "Effect on the player after eating cooked flesh from butchered corpses. This does not change unhappiness and stress gain."
+	Sandbox_ButcherCorpsesB42EffectOnEatCooked_option1 = "No effect"
+	Sandbox_ButcherCorpsesB42EffectOnEatCooked_option2 = "Food Sickness"
+	Sandbox_ButcherCorpsesB42EffectOnEatCooked_option3 = "Zombie Infection"
+	Sandbox_ButcherCorpsesB42EffectOnEatCooked_option4 = "Zombie Infection + Food Sickness"
+
+	Sandbox_ButcherCorpsesB42DropMeatOnGround = "Butchering action drops meat on ground",
+	Sandbox_ButcherCorpsesB42DropMeatOnGround_tooltip = "If enabled, butchering corpses via the right click menu will spawn Corpse Flesh on the ground instead of in the inventory."
+	
+}
