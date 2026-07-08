@@ -14,7 +14,7 @@ This copy has been updated for Project Zomboid Build 42.19 and adjusted for mult
 
 ## Install
 
-Place the `Contents/mods/Butcher Corpses` folder where Project Zomboid loads local or Workshop mods, then enable `Butcher Corpses B42` in the Mods menu or add `ButcherCorpsesB42` to the server mod list.
+Place the `Contents/mods/ButcherCorpsesB42` folder where Project Zomboid loads local or Workshop mods, then enable `Butcher Corpses B42` in the Mods menu or add `ButcherCorpsesB42` to the server mod list.
 
 For multiplayer servers, make sure both the server and clients have the same mod files enabled. Server config should use `Mods=ButcherCorpsesB42`.
 
