@@ -1,4 +1,4 @@
 name=Butcher Corpses B42
-poster=poster.png
 id=ButcherCorpsesB42
-description= You can butcher corpses. You can use the flesh for compost.. and if you're willing to abandon your humanity, something else.
+poster=poster.png
+description=Butcher corpses into Corpse Flesh. Updated for Project Zomboid Build 42.19 with multiplayer-ready server-side handling. Original contributors: MassCraxx and An77777777.
