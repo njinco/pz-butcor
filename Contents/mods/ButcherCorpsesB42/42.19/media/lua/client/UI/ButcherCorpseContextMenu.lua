@@ -1,16 +1,16 @@
-ButcherCorpsesB42 = {};
+ButcherCorpsesB42 = ButcherCorpsesB42 or {};
 
-ButcherCorpsesB42.Recipe = getScriptManager():getRecipe("ButcherCorpsesB42.ButcherCorpsesB42 Butcher Corpse")
-ButcherCorpsesB42.RecipeTools = {}
-if ButcherCorpsesB42.Recipe then
-    for i=0, ButcherCorpsesB42.Recipe:getSource():size()-1 do
-        local source = ButcherCorpsesB42.Recipe:getSource():get(i);
-        if source:isKeep() then
-            ButcherCorpsesB42.RecipeTools = source:getItems()
-            break
-        end
-    end
-end
+ButcherCorpsesB42.ActionTime = 240
+ButcherCorpsesB42.ToolTypes = {
+    MeatCleaver = true,
+    HandAxe = true,
+    Axe = true,
+    WoodAxe = true,
+}
+ButcherCorpsesB42.ToolTags = {
+    SharpKnife = true,
+    Saw = true,
+}
 
 local function itemHasTag(item, tag)
     if not item or not tag then
@@ -23,37 +23,27 @@ local function itemHasTag(item, tag)
     return tags and tags:contains(tag) or false
 end
 
-local function itemMatchesRecipeTool(item, recipeTool)
-    if not item or not recipeTool then
+local function isButcherTool(item)
+    if not item or item:isBroken() then
         return false
     end
-    if recipeTool == item:getFullType() or recipeTool == item:getType() then
+    if ButcherCorpsesB42.ToolTypes[item:getType()] or ButcherCorpsesB42.ToolTypes[item:getFullType()] then
         return true
     end
-    if recipeTool == "SharpKnife" or recipeTool == "[Recipe.GetItemTypes.SharpKnife]" then
-        return itemHasTag(item, "SharpKnife")
-    end
-    if recipeTool == "Saw" or recipeTool == "[Recipe.GetItemTypes.Saw]" then
-        return itemHasTag(item, "Saw")
-    end
-    return false
-end
-
-local function isButcherTool(item)
-    if item then
-        for i=0, ButcherCorpsesB42.RecipeTools:size()-1 do
-            local recipeTool = ButcherCorpsesB42.RecipeTools:get(i)
-            if not item:isBroken() and itemMatchesRecipeTool(item, recipeTool) then
-                return true
-            end
+    for tag in pairs(ButcherCorpsesB42.ToolTags) do
+        if itemHasTag(item, tag) then
+            return true
         end
     end
     return false
 end
 
 local function hasButcherTool(player)
-    local inventory = getSpecificPlayer(player):getInventory()
-    return inventory:getFirstEvalRecurse(isButcherTool) ~= nil
+    local playerObj = getSpecificPlayer(player)
+    if not playerObj then
+        return false
+    end
+    return playerObj:getInventory():getFirstEvalRecurse(isButcherTool) ~= nil
 end
 
 local function getCorpseFromSquare(square)
@@ -88,28 +78,23 @@ local function getCorpseFromWorldObjects(worldobjects)
 end
 
 ButcherCorpsesB42.getButcherTool = function(player)
-    local playerInv = player:getInventory();
-    -- first check if we have a valid tool equipped
     local handItem = player:getPrimaryHandItem()
     if handItem and isButcherTool(handItem) then
         return handItem
     end
-    -- if not, check if there's a valid tool in inventory
-    return playerInv:getFirstEvalRecurse(isButcherTool)
+    return player:getInventory():getFirstEvalRecurse(isButcherTool)
 end
 
 ButcherCorpsesB42.onButcherCorpse = function(worldobjects, WItem, player)
-    if not ButcherCorpsesB42.Recipe then
+    local playerObj = getSpecificPlayer(player)
+    if not playerObj then
         return
     end
-    local playerObj = getSpecificPlayer(player)
-    -- walk to corpse
     if WItem:getSquare() and luautils.walkAdj(playerObj, WItem:getSquare()) then
-        -- equip item and start action
         local butcherItem = ButcherCorpsesB42.getButcherTool(playerObj)
         if butcherItem then
             butcherItem = ISWorldObjectContextMenu.equip(playerObj, playerObj:getPrimaryHandItem(), butcherItem, true)
-            ISTimedActionQueue.add(ButcherCorpseB42Action:new(playerObj, WItem,butcherItem, ButcherCorpsesB42.Recipe:getTimeToMake()));
+            ISTimedActionQueue.add(ButcherCorpseB42Action:new(playerObj, WItem, butcherItem, ButcherCorpsesB42.ActionTime));
         else
             print("No valid tool found! Likely broken...")
         end
@@ -117,9 +102,6 @@ ButcherCorpsesB42.onButcherCorpse = function(worldobjects, WItem, player)
 end
 
 ButcherCorpsesB42.onButcherMenu = function(player, context, worldobjects)
-    if not ButcherCorpsesB42.Recipe then
-        return
-    end
     local body = getCorpseFromWorldObjects(worldobjects)
     if body and hasButcherTool(player) then
         context:addOption(getText("ContextMenu_ButcherCorpsesB42_Butcher_Corpse"), worldobjects, ButcherCorpsesB42.onButcherCorpse, body, player);

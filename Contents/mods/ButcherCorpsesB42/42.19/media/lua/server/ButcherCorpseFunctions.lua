@@ -5,12 +5,12 @@ ButcherCorpsesB42Util.onCreate_getFreshResult = function (items, result, player)
 end
 
 ButcherCorpsesB42Util.OnEat_CorpseFlesh = function (food, player, percent)
-    local effectOnEat = SandboxVars.ButcherCorpsesB42.EffectOnEat or 3
+    local effectOnEat = SandboxVars.ButcherCorpsesB42 and SandboxVars.ButcherCorpsesB42.EffectOnEat or 3
     ButcherCorpsesB42Util.OnEat_CorpseFlesh_Effect(effectOnEat, percent * food:getActualWeight(), player)
 end
  
 ButcherCorpsesB42Util.OnEat_CookedCorpseFlesh = function (food, player, percent)
-    local effectOnEatCooked = SandboxVars.ButcherCorpsesB42.EffectOnEatCooked or 1
+    local effectOnEatCooked = SandboxVars.ButcherCorpsesB42 and SandboxVars.ButcherCorpsesB42.EffectOnEatCooked or 1
     ButcherCorpsesB42Util.OnEat_CorpseFlesh_Effect(effectOnEatCooked, percent * food:getActualWeight(), player)
 end
 
@@ -30,6 +30,21 @@ ButcherCorpsesB42Util.OnEat_CorpseFlesh_Effect = function (setting, amount, play
 end
 
 
+local TOOL_TYPES = {
+    MeatCleaver = true,
+    HandAxe = true,
+    Axe = true,
+    WoodAxe = true,
+}
+
+local TOOL_TAGS = {
+    SharpKnife = true,
+    Saw = true,
+}
+
+local RESULT_FULL_TYPE = "ButcherCorpsesB42.Fleshofcorpse"
+local RESULT_COUNT = 10
+
 local function itemHasTag(item, tag)
     if not item or not tag then
         return false
@@ -41,51 +56,26 @@ local function itemHasTag(item, tag)
     return tags and tags:contains(tag) or false
 end
 
-local function itemMatchesRecipeTool(item, recipeTool)
-    if not item or not recipeTool then
+local function isButcherTool(item)
+    if not item or item:isBroken() then
         return false
     end
-    if recipeTool == item:getFullType() or recipeTool == item:getType() then
+    if TOOL_TYPES[item:getType()] or TOOL_TYPES[item:getFullType()] then
         return true
     end
-    if recipeTool == "SharpKnife" or recipeTool == "[Recipe.GetItemTypes.SharpKnife]" then
-        return itemHasTag(item, "SharpKnife")
-    end
-    if recipeTool == "Saw" or recipeTool == "[Recipe.GetItemTypes.Saw]" then
-        return itemHasTag(item, "Saw")
-    end
-    return false
-end
-
-local function isButcherToolForRecipe(item, recipe)
-    if not item or item:isBroken() or not recipe then
-        return false
-    end
-    for i=0, recipe:getSource():size()-1 do
-        local source = recipe:getSource():get(i)
-        if source:isKeep() then
-            local recipeTools = source:getItems()
-            for j=0, recipeTools:size()-1 do
-                if itemMatchesRecipeTool(item, recipeTools:get(j)) then
-                    return true
-                end
-            end
+    for tag in pairs(TOOL_TAGS) do
+        if itemHasTag(item, tag) then
+            return true
         end
     end
     return false
 end
 
-local function hasButcherTool(player, recipe)
-    if not player or not recipe then
+local function hasButcherTool(player)
+    if not player then
         return false
     end
-    return player:getInventory():getFirstEvalRecurse(function(item)
-        return isButcherToolForRecipe(item, recipe)
-    end) ~= nil
-end
-
-local function getButcherRecipe()
-    return getScriptManager():getRecipe("ButcherCorpsesB42.ButcherCorpsesB42 Butcher Corpse")
+    return player:getInventory():getFirstEvalRecurse(isButcherTool) ~= nil
 end
 
 local function getCorpseFromSquare(square, corpseIndex)
@@ -145,21 +135,15 @@ local function addResultItem(player, square, fullType, dropOnGround)
 end
 
 ButcherCorpsesB42Util.butcherCorpse = function(player, args)
-    local recipe = getButcherRecipe()
     local square = getButcherSquare(args)
     local corpse = getCorpseFromSquare(square, args and args.corpseIndex or nil)
-    if not recipe or not square or not corpse or not isPlayerCloseEnough(player, square) or not hasButcherTool(player, recipe) then
+    if not square or not corpse or not isPlayerCloseEnough(player, square) or not hasButcherTool(player) then
         return
     end
 
-    local result = recipe:getResult()
-    if not result then
-        return
-    end
-
-    local dropOnGround = SandboxVars.ButcherCorpsesB42.DropMeatOnGround
-    for i=1, result:getCount() do
-        addResultItem(player, square, result:getFullType(), dropOnGround)
+    local dropOnGround = not SandboxVars.ButcherCorpsesB42 or SandboxVars.ButcherCorpsesB42.DropMeatOnGround
+    for i=1, RESULT_COUNT do
+        addResultItem(player, square, RESULT_FULL_TYPE, dropOnGround)
     end
 
     square:removeCorpse(corpse, false)
