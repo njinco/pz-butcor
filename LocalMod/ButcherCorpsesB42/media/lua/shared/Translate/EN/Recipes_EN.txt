@@ -1,5 +1,0 @@
-Recipes_EN = {
-
-    Recipe_ButcherCorpsesB42_Butcher_Corpse = "Butcher Corpse for Flesh",
-
-}
