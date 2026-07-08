@@ -1,4 +1,4 @@
-module ButCor {
+module ButcherCorpsesB42 {
 
   
   item Fleshofcorpse {
@@ -16,9 +16,9 @@ module ButCor {
 	UnhappyChange = 100,
 	StressChange = 100,
 	IsCookable = TRUE,
-	ReplaceOnCooked = ButCor.CookedCorpseFlesh,
+	ReplaceOnCooked = ButcherCorpsesB42.CookedCorpseFlesh,
 	MinutesToCook = 60,
-    OnEat = ButcherCorpsesUtil.OnEat_CorpseFlesh,
+    OnEat = ButcherCorpsesB42Util.OnEat_CorpseFlesh,
     DaysFresh=1,
     DaysTotallyRotten=1,
     Tooltip=Tooltip_CorpseFlesh,
@@ -43,7 +43,7 @@ module ButCor {
 	IsCookable = TRUE,
 	MinutesToCook = 0, 
 	MinutesToBurn = 20,
-    OnEat = ButcherCorpsesUtil.OnEat_CookedCorpseFlesh,
+    OnEat = ButcherCorpsesB42Util.OnEat_CookedCorpseFlesh,
 	DaysFresh=1,
     DaysTotallyRotten=1,
 	Tooltip=Tooltip_CookedCorpseFlesh,

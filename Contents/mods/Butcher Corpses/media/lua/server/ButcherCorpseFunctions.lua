@@ -1,21 +1,21 @@
-ButcherCorpsesUtil = ButcherCorpsesUtil or {};
+ButcherCorpsesB42Util = ButcherCorpsesB42Util or {};
 
-ButcherCorpsesUtil.onCreate_getFreshResult = function (items, result, player)
+ButcherCorpsesB42Util.onCreate_getFreshResult = function (items, result, player)
     result:setAge(0);
 end
 
-ButcherCorpsesUtil.OnEat_CorpseFlesh = function (food, player, percent)
-    local effectOnEat = SandboxVars.ButCor.EffectOnEat or 3
-    ButcherCorpsesUtil.OnEat_CorpseFlesh_Effect(effectOnEat, percent * food:getActualWeight(), player)
+ButcherCorpsesB42Util.OnEat_CorpseFlesh = function (food, player, percent)
+    local effectOnEat = SandboxVars.ButcherCorpsesB42.EffectOnEat or 3
+    ButcherCorpsesB42Util.OnEat_CorpseFlesh_Effect(effectOnEat, percent * food:getActualWeight(), player)
 end
  
-ButcherCorpsesUtil.OnEat_CookedCorpseFlesh = function (food, player, percent)
-    local effectOnEatCooked = SandboxVars.ButCor.EffectOnEatCooked or 1
-    ButcherCorpsesUtil.OnEat_CorpseFlesh_Effect(effectOnEatCooked, percent * food:getActualWeight(), player)
+ButcherCorpsesB42Util.OnEat_CookedCorpseFlesh = function (food, player, percent)
+    local effectOnEatCooked = SandboxVars.ButcherCorpsesB42.EffectOnEatCooked or 1
+    ButcherCorpsesB42Util.OnEat_CorpseFlesh_Effect(effectOnEatCooked, percent * food:getActualWeight(), player)
 end
 
 -- setting 1 = no effect | 2 = food sick | 3 = infection | 4 = both
-ButcherCorpsesUtil.OnEat_CorpseFlesh_Effect = function (setting, amount, player)
+ButcherCorpsesB42Util.OnEat_CorpseFlesh_Effect = function (setting, amount, player)
     local bodyDamage = player:getBodyDamage();
 
     if setting == 2 or setting == 4 then
@@ -85,7 +85,7 @@ local function hasButcherTool(player, recipe)
 end
 
 local function getButcherRecipe()
-    return getScriptManager():getRecipe("ButCor.ButCor Butcher Corpse")
+    return getScriptManager():getRecipe("ButcherCorpsesB42.ButcherCorpsesB42 Butcher Corpse")
 end
 
 local function getCorpseFromSquare(square, corpseIndex)
@@ -144,7 +144,7 @@ local function addResultItem(player, square, fullType, dropOnGround)
     end
 end
 
-ButcherCorpsesUtil.butcherCorpse = function(player, args)
+ButcherCorpsesB42Util.butcherCorpse = function(player, args)
     local recipe = getButcherRecipe()
     local square = getButcherSquare(args)
     local corpse = getCorpseFromSquare(square, args and args.corpseIndex or nil)
@@ -157,7 +157,7 @@ ButcherCorpsesUtil.butcherCorpse = function(player, args)
         return
     end
 
-    local dropOnGround = SandboxVars.ButCor.DropMeatOnGround
+    local dropOnGround = SandboxVars.ButcherCorpsesB42.DropMeatOnGround
     for i=1, result:getCount() do
         addResultItem(player, square, result:getFullType(), dropOnGround)
     end
@@ -166,8 +166,8 @@ ButcherCorpsesUtil.butcherCorpse = function(player, args)
 end
 
 local function onClientCommand(module, command, player, args)
-    if module == "ButCor" and command == "ButcherCorpse" then
-        ButcherCorpsesUtil.butcherCorpse(player, args)
+    if module == "ButcherCorpsesB42" and command == "ButcherCorpse" then
+        ButcherCorpsesB42Util.butcherCorpse(player, args)
     end
 end
 

@@ -1,19 +1,19 @@
 VERSION = 1,
 
-option ButCor.EffectOnEat
+option ButcherCorpsesB42.EffectOnEat
 {
 	type = enum, numValues = 4, default = 3, 
-	page = ButCor, translation = ButCorEffectOnEat,
+	page = ButcherCorpsesB42, translation = ButcherCorpsesB42EffectOnEat,
 }
 
-option ButCor.EffectOnEatCooked
+option ButcherCorpsesB42.EffectOnEatCooked
 {
 	type = enum, numValues = 4, default = 1, 
-	page = ButCor, translation = ButCorEffectOnEatCooked,
+	page = ButcherCorpsesB42, translation = ButcherCorpsesB42EffectOnEatCooked,
 }
 
-option ButCor.DropMeatOnGround
+option ButcherCorpsesB42.DropMeatOnGround
 {
 	type = boolean, default = true, 
-	page = ButCor, translation = ButCorDropMeatOnGround,
+	page = ButcherCorpsesB42, translation = ButcherCorpsesB42DropMeatOnGround,
 }

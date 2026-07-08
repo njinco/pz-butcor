@@ -1,22 +1,22 @@
 require "TimedActions/ISBaseTimedAction"
 
-ButcherCorpseAction = ISBaseTimedAction:derive("ButcherCorpseAction");
-ButcherCorpseAction.soundDelay = 1
+ButcherCorpseB42Action = ISBaseTimedAction:derive("ButcherCorpseB42Action");
+ButcherCorpseB42Action.soundDelay = 1
 
-function ButcherCorpseAction:isValid()
+function ButcherCorpseB42Action:isValid()
     if self.corpseBody:getStaticMovingObjectIndex() < 0 then
         return false
     end
     return true
 end
 
-function ButcherCorpseAction:waitToStart()
+function ButcherCorpseB42Action:waitToStart()
     self.character:faceThisObject(self.corpseBody)
     return self.character:shouldBeTurning();
 end
 
-function ButcherCorpseAction:update()
-    if self.soundTime + ButcherCorpseAction.soundDelay < getTimestamp() then
+function ButcherCorpseB42Action:update()
+    if self.soundTime + ButcherCorpseB42Action.soundDelay < getTimestamp() then
         self.soundTime = getTimestamp();
 
         -- play sound
@@ -49,8 +49,8 @@ function ButcherCorpseAction:update()
     self.character:setMetabolicTarget(Metabolics.HeavyWork);
 end
 
-function ButcherCorpseAction:start()
-    self.corpse:setJobType(getText("ContextMenu_ButCor_Butcher_Corpse"));
+function ButcherCorpseB42Action:start()
+    self.corpse:setJobType(getText("ContextMenu_ButcherCorpsesB42_Butcher_Corpse"));
     self.corpse:setJobDelta(0.0);
     self.character:SetVariable("LootPosition", "Low");
     self:setActionAnim("Loot");
@@ -58,7 +58,7 @@ function ButcherCorpseAction:start()
     self.character:reportEvent("EventLootItem");
 end
 
-function ButcherCorpseAction:stop()
+function ButcherCorpseB42Action:stop()
     if self.sound and self.sound ~= 0 and self.character:getEmitter():isPlaying(self.sound) then
         self.character:getEmitter():stopSound(self.sound);
     end
@@ -67,7 +67,7 @@ function ButcherCorpseAction:stop()
     self.corpse:setJobDelta(0.0);
 end
 
-function ButcherCorpseAction:perform()
+function ButcherCorpseB42Action:perform()
     self.corpse:setJobDelta(0.0);
     self.character:getInventory():setDrawDirty(true);
 
@@ -80,9 +80,9 @@ function ButcherCorpseAction:perform()
     }
 
     if isClient() then
-        sendClientCommand(self.character, "ButCor", "ButcherCorpse", args)
-    elseif ButcherCorpsesUtil and ButcherCorpsesUtil.butcherCorpse then
-        ButcherCorpsesUtil.butcherCorpse(self.character, args)
+        sendClientCommand(self.character, "ButcherCorpsesB42", "ButcherCorpse", args)
+    elseif ButcherCorpsesB42Util and ButcherCorpsesB42Util.butcherCorpse then
+        ButcherCorpsesB42Util.butcherCorpse(self.character, args)
     end
 
     local pdata = getPlayerData(self.character:getPlayerNum());
@@ -95,7 +95,7 @@ function ButcherCorpseAction:perform()
     ISBaseTimedAction.perform(self);
 end
 
-function ButcherCorpseAction:new(character, corpse, butcherItem, time)
+function ButcherCorpseB42Action:new(character, corpse, butcherItem, time)
     local o = {}
     setmetatable(o, self)
     self.__index = self

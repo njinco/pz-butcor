@@ -1,5 +1,5 @@
 ContextMenu_EN = {
 
-	ContextMenu_ButCor_Butcher_Corpse = "Butcher Corpse for Flesh",
+	ContextMenu_ButcherCorpsesB42_Butcher_Corpse = "Butcher Corpse for Flesh",
 	
 }
