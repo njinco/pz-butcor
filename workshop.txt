@@ -1,6 +1,7 @@
 version=1
+id=3760368084
 title=Butcher Corpses B42 MP
-description=Butcher Corpses B42 updated for Project Zomboid Build 42.19.
+description=Butcher Corpses B42 updated for Project Zomboid Build 42.
 description=Multiplayer-ready server-side corpse removal and meat creation.
 description=Original upstream contributors: MassCraxx and An77777777.
 description=Source: https://github.com/An77777777/Butcher-Corpses

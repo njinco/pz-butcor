@@ -2,7 +2,7 @@
 
 Project Zomboid mod that lets players butcher corpses into Corpse Flesh. The flesh can be used for compost, cooked, or eaten with sandbox-configurable consequences.
 
-This copy has been updated for Project Zomboid Build 42.19 and adjusted for multiplayer use by moving corpse removal and meat creation to server-side validation.
+This copy has been updated for Project Zomboid Build 42 and adjusted for multiplayer use by moving corpse removal and meat creation to server-side validation.
 
 ## Features
 
@@ -22,7 +22,7 @@ For multiplayer servers, make sure both the server and clients have the same mod
 
 ## Compatibility
 
-Target game version: Project Zomboid Build 42.19.
+Target game version: Project Zomboid Build 42.
 
 ## Credits
 
